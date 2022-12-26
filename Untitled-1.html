@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<title>Bootstrap Example</title>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/css/bootstrap.min.css" rel="stylesheet" >
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js" ></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/js/bootstrap.min.js" integrity="sha384-Atwg2Pkwv9vp0ygtn1JAojH0nYbwNJLPhwyoVbhoPwBhjQPR5VtM2+xf0Uwh9KtT" crossorigin="anonymous"></script>
+
+  <style>
+    .main-container{
+      display: flex;
+    }
+    .dropdown{
+      margin: 10px;
+    }
+  </style>
+  </head>
+<body>
+	<div class="main-container">
+    <div class="dropdown">
+      <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
+      Selecione
+      </button>
+      <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
+      <li> <label for="checkbox"><input type="checkbox" id="checkbox1" name="checkbox" value="checkbox"  onchange="checkboxChanged(this)"> <span style="margin-left:5px;">Coordenador 1</span> </label></li>
+      <li> <label for="checkbox"><input type="checkbox" id="checkbox2" name="checkbox" value="checkbox"  onchange="checkboxChanged(this)"> <span style="margin-left:5px;">Coordenador 2</span> </label></li>
+      <li> <label for="checkbox"><input type="checkbox" id="checkbox3" name="checkbox" value="checkbox"  onchange="checkboxChanged(this)"> <span style="margin-left:5px;">Coordenador 3</span> </label></li>
+      </ul>
+    </div>
+
+    <div class="dropdown">
+      <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton2" data-bs-toggle="dropdown" aria-expanded="false">
+        Selecione
+      </button>
+      <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton2">
+        
+      </ul>
+    </div>
+</div>
+
+
+  <script>
+    let checkedCount = 0;
+    function checkboxChanged(element) {
+    if (element.checked) {
+      // Checkbox is checked
+      checkedCount += 1;
+    } else {
+      // Checkbox is not checked
+      checkedCount -= 1;
+    }
+    
+    if(checkedCount < 0){
+    checkedCount = 0;
+    }
+    // Update the text of the dropdown button
+    document.getElementById('dropdownMenuButton1').innerHTML = `Selecionados: (${checkedCount})`;
+
+      // Get the selected options in the first dropdown
+    let selectedOptions = [];
+    let checkboxes = document.querySelectorAll('input[type=checkbox]');
+    for (let checkbox of checkboxes) {
+      if (checkbox.checked) {
+        selectedOptions.push(checkbox.parentNode.textContent.trim());
+      }
+    }
+    console.log(selectedOptions);
+  // Clear the current options in the second dropdown
+  let secondDropdown = document.querySelector('#dropdownMenuButton2 + .dropdown-menu');
+  secondDropdown.innerHTML = '';
+
+  // Add new options to the second dropdown based on the selected options in the first dropdown
+  for (let option of selectedOptions) {
+    let newOption = document.createElement('li');
+    newOption.innerHTML = `<label for="checkbox"><input type="checkbox" value="${option}" onchange="secondDropdownChanged(this)"> <span style="margin-left:5px;">${option.replace('Coordenador', 'Supervisor')}</span> </label>`;
+    secondDropdown.appendChild(newOption);
+  }
+  }
+
+  let checkedCountSecond = 0;
+function secondDropdownChanged(element) {
+  if (element.checked) {
+    // Checkbox is checked
+    checkedCountSecond += 1;
+  } else {
+    // Checkbox is not checked
+    checkedCountSecond -= 1;
+  }
+  
+  if(checkedCountSecond < 0){
+    checkedCountSecond = 0;
+  }
+  // Update the text of the dropdown button
+  document.getElementById('dropdownMenuButton2').innerHTML = `Selecionados: (${checkedCountSecond})`;
+}
+  
+
+
+  </script>
+</body>
+</html>
